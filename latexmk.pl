@@ -983,7 +983,7 @@ else {
     $ps_update_method = 0;  # gv -watch watches the ps file
     $ps_previewer  = 'start gv %O %S';
     $ps_previewer_landscape  = 'start gv -swap %O %S';
-    $pdf_previewer = 'start acroread %O %S';
+    $pdf_previewer = 'open %S'; #'start acroread %O %S';
     $pdf_update_method = 1;  # acroread under unix needs manual update
     $lpr = 'lpr %O %S';         # Assume lpr command prints postscript files correctly
     $lpr_dvi =
