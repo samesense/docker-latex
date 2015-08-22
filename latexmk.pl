@@ -760,10 +760,10 @@ if ( $^O eq "MSWin32" ) {
 
     # For a pdf-file, "start x.pdf" starts the pdf viewer associated with
     #   pdf files, so no program name is needed:
-    $pdf_previewer = 'start %O %S';
-    $ps_previewer  = 'start %O %S';
+    $pdf_previewer = '%O %S';
+    $ps_previewer  = '%O %S';
     $ps_previewer_landscape  = $ps_previewer;
-    $dvi_previewer  = 'start %O %S';
+    $dvi_previewer  = '%O %S';
     $dvi_previewer_landscape = "$dvi_previewer";
     # Viewer update methods: 
     #    0 => auto update: viewer watches file (e.g., gv)
