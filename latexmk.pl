@@ -8417,8 +8417,9 @@ sub Run_Detached {
     if ( "$^O" eq "MSWin32" ){
         # Win95, WinNT, etc: Use MS's start command:
         # Need extra double quotes to deal with quoted filenames: 
-        #    MSWin start takes first quoted argument to be a Window title. 
-        return( 0, system( "start \"\" $cmd_line" ) );
+        #    MSWin start takes first quoted argument to be a Window title.
+	#return( 0, system( "start \"\" $cmd_line" ) );
+        return( 0, system( "$cmd_line" ) );
     } else {
         # Assume anything else is UNIX or clone
         # For this purpose cygwin behaves like UNIX.
