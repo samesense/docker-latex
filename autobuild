@@ -1,3 +1,9 @@
 #!/bin/bash
 
-latexmk -pvc -pdf -synctex=1 -interaction=nonstopmode $1
+#latexmk -pvc -pdf -synctex=1 -interaction=batchmode $1
+IFS='.' read -a array <<< "$1"
+
+pdflatex $1
+bibtex "${array[0]}"
+pdflatex $1
+pdflatex $1

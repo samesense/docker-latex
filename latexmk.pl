@@ -3033,33 +3033,34 @@ CHANGE:
             rdb_one_rule( 'update_view', \&rdb_run1 );
         }
         elsif ( ($view_file ne '') && (-e $view_file) && !$viewer_running ) {
+	    warn "no previewer\n";
             # Start the viewer
-            if ( !$silent ) {
-                if ($new_viewer_always) {
-                    warn "$My_name: starting previewer for '$view_file'\n",
-                         "------------\n";
-                }
-                else {
-                    warn "$My_name: I have not found a previewer that ",
-                         "is already running. \n",
-                         "   So I will start it for '$view_file'\n",
-                         "------------\n";
-               }
-            }
-            local $retcode = 0;
-            rdb_one_rule( 'view', sub { $retcode = &rdb_run1;} );
-            if ( $retcode != 0 ) {
-                if ($force_mode) {
-                    warn "$My_name: I could not run previewer\n";
-                }
-                else {
-                    &exit_msg1( "I could not run previewer", $retcode);
-                }
-            }
-            else {
-                $viewer_running = 1;
-                $$Pneed_to_get_viewer_process = 1;
-            } # end analyze result of trying to run viewer
+            # if ( !$silent ) {
+            #     if ($new_viewer_always) {
+            #         warn "$My_name: starting previewer for '$view_file'\n",
+            #              "------------\n";
+            #     }
+            #     else {
+            #         warn "$My_name: I have not found a previewer that ",
+            #              "is already running. \n",
+            #              "   So I will start it for '$view_file'\n",
+            #              "------------\n";
+            #    }
+            # }
+            # local $retcode = 0;
+            # rdb_one_rule( 'view', sub { $retcode = &rdb_run1;} );
+            # if ( $retcode != 0 ) {
+            #     if ($force_mode) {
+            #         warn "$My_name: I could not run previewer\n";
+            #     }
+            #     else {
+            #         &exit_msg1( "I could not run previewer", $retcode);
+            #     }
+            # }
+            # else {
+            #     $viewer_running = 1;
+            #     $$Pneed_to_get_viewer_process = 1;
+            # } # end analyze result of trying to run viewer
         } # end start viewer
         if ( $failure > 0 ) {
             if ( !$failure_msg ) {
@@ -3106,43 +3107,43 @@ CHANGE:
                warn "Cannot open '$deps_file' for output of dependency information\n";
            }
          }
-        if ( $first_time || $updated || $failure ) {
-            print "\n=== Watching for updated files. Use ctrl/C to stop ...\n";
-        }
-        $waiting = 1; if ($diagnostics) { warn "WAITING\n"; }
+        # if ( $first_time || $updated || $failure ) {
+        #     print "\n=== Watching for updated files. Use ctrl/C to stop ...\n";
+        # }
+        # $waiting = 1; if ($diagnostics) { warn "WAITING\n"; }
 # During waiting for file changes, handle ctrl/C and ctrl/break here, rather than letting
 #   system handle them by terminating script (and any script that calls it).  This allows,
 #   for example, the clean up code in the following command line to work:
 #          latexmk -pvc foo; cleanup;
-        &catch_break;
-        $have_break = 0;
-  WAIT: while (1) {
-           sleep( $sleep_time );
-           if ($have_break) { last WAIT; }
-           if ( rdb_new_changes(keys %rules_to_watch) ) { 
-               if (!$silent) {
-                   warn "$My_name: Need to remake files.\n";
-                   &rdb_diagnose_changes( '  ' );
-               }
-               last WAIT;
-           }
-           #  Don't count waiting time in processing:
-           $processing_time1 = processing_time();
-        # Does this do this job????
-           local $new_files = 0;
-           rdb_for_some( [keys %current_primaries], sub{ $new_files += &rdb_find_new_files } );
-           if ($new_files > 0) {
-               warn "$My_name: New file(s) found.\n";
-               last WAIT; 
-           }
-           if ($have_break) { last WAIT; }
-     } # end WAIT:
-     &default_break;
-     if ($have_break) { 
-          print "$My_name: User typed ctrl/C or ctrl/break.  I'll finish.\n";
-          return;
-     }
-     $waiting = 0; if ($diagnostics) { warn "NOT       WAITING\n"; }
+        # &catch_break;
+        # $have_break = 0;
+  # WAIT: while (1) {
+  #          sleep( $sleep_time );
+  #          if ($have_break) { last WAIT; }
+  #          if ( rdb_new_changes(keys %rules_to_watch) ) { 
+  #              if (!$silent) {
+  #                  warn "$My_name: Need to remake files.\n";
+  #                  &rdb_diagnose_changes( '  ' );
+  #              }
+  #              last WAIT;
+  #          }
+  #          #  Don't count waiting time in processing:
+  #          $processing_time1 = processing_time();
+  #       # Does this do this job????
+  #          local $new_files = 0;
+  #          rdb_for_some( [keys %current_primaries], sub{ $new_files += &rdb_find_new_files } );
+  #          if ($new_files > 0) {
+  #              warn "$My_name: New file(s) found.\n";
+  #              last WAIT; 
+  #          }
+  #          if ($have_break) { last WAIT; }
+  #    } # end WAIT:
+     # &default_break;
+     # if ($have_break) { 
+     #      print "$My_name: User typed ctrl/C or ctrl/break.  I'll finish.\n";
+     #      return;
+     # }
+     # $waiting = 0; if ($diagnostics) { warn "NOT       WAITING\n"; }
   } #end infinite_loop CHANGE:
 } #END sub make_preview_continuous
 
