@@ -8,8 +8,14 @@ simple script is provided to perform pdflatex + bibtex build.
 Usage
 -----
 
-The container expects your LaTeX-documents mounted at `/latex`, so if you want
-to start a continuous build from your cwd, simply run:
+##### Docker OS X install
+* brew cask install virtualbox
+* brew install docker boot2docker
+* boot2docker up
+* eval "$(boot2docker shellinit)"
+* docker pull samesense/docker-latex or clone this repo, and "docker build -t docker-latex ." from repo dir
+
+The container expects your LaTeX-documents mounted at `/latex`, so if you want build from your cwd, simply run:
 
     docker run --rm -v `pwd`:/latex samesense/latex autobuild yourfile.tex
 
