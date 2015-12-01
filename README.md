@@ -27,3 +27,5 @@ Adding additional cls-files
 `TEXMFHOME` is located at `/root/texmf` within the container. Simply put your
 files there (in the correct hierarchy). And re-run `texhash` and `mktexlsr
 /root/texmf` so that LaTeX will find them.
+
+Try this template: https://github.com/posquit0/Awesome-CV
